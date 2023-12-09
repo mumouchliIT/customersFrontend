@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  build_push_image_deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,8 +23,11 @@ jobs:
 
       - name: Deploy to Docker Hub
         run: |
-          # You've already pulled and stopped the container in your original script
-          docker pull mumouchli2/frontend_customers_image:latest
-          docker stop frontend_customers_container || true
-          docker rm frontend_customers_container || true
+          # Check if the container exists
+          if docker ps -a --filter "name=frontend_customers_container" --format '{{.Names}}' | grep -q "frontend_customers_container"; then
+            docker stop frontend_customers_container
+            docker rm frontend_customers_container
+          fi
+          
+          # Create and run the container
           docker run -d --name frontend_customers_container -p 8080:80 mumouchli2/frontend_customers_image:latest
