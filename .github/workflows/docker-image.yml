@@ -8,6 +8,23 @@ on:
 
 jobs:
 
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Docker
+      run: docker pull mumouchli2/frontend_customers_image:latest
+
+    - name: Run tests
+        run: |
+          npm install
+          npm test
+
+
+
   build-and-push:
 
     runs-on: ubuntu-latest
