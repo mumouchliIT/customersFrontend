@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build_push_image_deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,20 +21,13 @@ jobs:
           docker build -t mumouchli2/frontend_customers_image:latest .
           docker push mumouchli2/frontend_customers_image:latest
 
-      - name: Deploy to Docker Container
+      - name: Deploy to Docker Hub
         run: |
           docker pull mumouchli2/frontend_customers_image:latest
+
+          # Add a delay of 5 seconds before stopping and removing the container
+          sleep 5
+
           docker stop frontend_customers_container || true
           docker rm frontend_customers_container || true
           docker run -d --name frontend_customers_container -p 8080:80 mumouchli2/frontend_customers_image:latest
-
-      - name: Debugging
-        run: |
-          echo "Starting Docker Container Deployment"
-          docker pull mumouchli2/frontend_customers_image:latest
-          docker stop frontend_customers_container || true
-          docker rm frontend_customers_container || true
-          docker run -d --name frontend_customers_container -p 8080:80 mumouchli2/frontend_customers_image:latest
-          echo "Docker Container Deployment Complete"
-
-
