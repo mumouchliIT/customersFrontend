@@ -25,9 +25,9 @@ jobs:
         run: |
           docker pull mumouchli2/frontend_customers_image:latest
 
-          # Add a delay of 5 seconds before stopping and removing the container
-          sleep 5
+        # Add a delay of 5 seconds before stopping and removing the container
+          # sleep 5
 
-          docker stop frontend_customers_container || true
-          docker rm frontend_customers_container || true
-          docker run -d --name frontend_customers_container -p 8080:80 mumouchli2/frontend_customers_image:latest
+          # docker stop frontend_customers_container || true
+          # docker rm frontend_customers_container || true
+          # docker run -d --name frontend_customers_container -p 8080:80 mumouchli2/frontend_customers_image:latest
