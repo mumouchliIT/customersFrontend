@@ -1,4 +1,4 @@
-name: Deploy to Docker Container
+name: Deploy to Docker Hub
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  Build-push-image-deploy-to-Container:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,8 +21,9 @@ jobs:
           docker build -t mumouchli2/frontend_customers_image:latest .
           docker push mumouchli2/frontend_customers_image:latest
 
-      - name: Deploy to Docker Container
+      - name: Deploy to Docker Hub
         run: |
+          # You've already pulled and stopped the container in your original script
           docker pull mumouchli2/frontend_customers_image:latest
           docker stop frontend_customers_container || true
           docker rm frontend_customers_container || true
