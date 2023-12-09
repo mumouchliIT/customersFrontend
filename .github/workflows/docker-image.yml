@@ -19,9 +19,9 @@ jobs:
       run: docker pull mumouchli2/frontend_customers_image:latest
 
     - name: Run tests
-        run: |
-          npm install
-          npm test
+      run: |
+        npm install
+        npm test
 
 
 
